@@ -1,4 +1,4 @@
-# 🏋️‍♂️ AppGym - Sistema de Administración de Gimnasio
+# 🏋️‍♂️ AppGym - Sistema de Administración de Gimnasio 
 
 Bienvenido a **AppGym**, una aplicación Java desarrollada para gestionar el funcionamiento completo de un gimnasio, desde el control de clientes hasta entrenadores, rutinas, dietas y más.
 
