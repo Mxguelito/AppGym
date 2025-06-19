@@ -29,12 +29,12 @@ Bienvenido a **AppGym**, una aplicación Java desarrollada para gestionar el fun
 
 ## 📁 Estructura de carpetas
 
-|-------src/        #Código fuente Java
-|-------bin/        #Archivos compilados
-|-------.settings/  #Configuración de Eclipse
-|-------.classpath  #Configuración del proyecto
-|-------.project    #Archivo del proyecto Eclipse
-|-------README.md   #Descripción del proyecto
+├── src/             # Código fuente Java
+├── bin/             # Archivos compilados
+├── .settings/       # Configuración del entorno Eclipse
+├── .classpath       # Archivo de configuración del proyecto
+├── .project         # Archivo del proyecto Eclipse
+└── README.md        # Documentación del sistema
 
 ---
 ##💡 Próximas mejoras
