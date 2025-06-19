@@ -44,7 +44,8 @@ public class LoginDAO{
 				l.setId(rs.getInt("id_usuario"));
 				l.setNombre(rs.getString("nombre"));
 				l.setEmail(rs.getString("email"));
-				l.setPass(rs.getString("pass"))
+				l.setPass(rs.getString("pass"));
+				l.setTipo(rs.getNString("tipo"));
 				
 				;
 				
@@ -61,9 +62,16 @@ public class LoginDAO{
 		try {
 			con=cn.getConnection();
 			ps=con.prepareStatement(sql);
-			ps.setString(0, sql);
+			ps.setString(1, registrar.getNombre());
+			ps.setString(2,registrar.getEmail());
+			ps.setString(3,registrar.getPass());
+			ps.setString(4, registrar.getTipo());
+			ps.execute();
+			return true;
 		} catch (SQLException e) {
-System.out.println(e.toString());		}
+System.out.println(e.toString());	
+return false;
+}
 		
 	}
 }
