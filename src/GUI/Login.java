@@ -117,7 +117,7 @@ public class Login extends JFrame {
 		botonLogin.setBackground(new Color(255, 115, 0));
 		
 		botonLogin.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
-		botonLogin.setBounds(61, 223, 109, 32);
+		botonLogin.setBounds(20, 223, 84, 32);
 		botonLogin.setFocusPainted(false);
 		botonLogin.setBorderPainted(false);
 		
@@ -140,6 +140,22 @@ public class Login extends JFrame {
 		lblNewLabel_5.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		lblNewLabel_5.setBounds(20, 10, 39, 17);
 		panel_2.add(lblNewLabel_5);
+		
+		JButton btnSingUp = new JButton("Sing up");
+		btnSingUp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Registro registro=new Registro();
+				registro.setVisible(true);
+				dispose();
+			}
+		});
+		btnSingUp.setForeground(Color.WHITE);
+		btnSingUp.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		btnSingUp.setFocusPainted(false);
+		btnSingUp.setBorderPainted(false);
+		btnSingUp.setBackground(new Color(255, 115, 0));
+		btnSingUp.setBounds(114, 223, 90, 32);
+		panel_1.add(btnSingUp);
 		
 		JLabel lblNewLabel_6 = new JLabel("");
 		lblNewLabel_6.setIcon(new ImageIcon("C:\\Users\\pc\\eclipse-workspace\\AppGym\\src\\img\\img5.png"));
