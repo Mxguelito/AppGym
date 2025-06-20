@@ -169,7 +169,7 @@ public class Login extends JFrame {
 			
 			if (lg.getEmail()!=null&&lg.getPass()!=null) {
 				
-			Sistema sis =new Sistema();
+			Sistema sis =new Sistema(lg);
 			
 			sis.setVisible(true);
 			

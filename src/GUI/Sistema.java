@@ -43,6 +43,8 @@ import BLL.Venta;
 import BLL.VentaDAO;
 import DLL.Cliente2;
 import DLL.ClienteDAO2;
+import DLL.Login2;
+
 import javax.swing.JScrollPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -120,6 +122,7 @@ public class Sistema extends JFrame {
 		
 		
 	}
+	
      
 	public void ListarCliente() {
 
@@ -295,7 +298,24 @@ public 	void LimpiarTable() {
 	private JTextField inputCantidadInventario;
 	private JTextField inputPrecioInventario;
 	private JTable table7;
+	
+	public Sistema (Login2 privilegios) {
+		this();
+		
+		if (privilegios.getTipo().equals("Entrenador")) {
+			botonTienda.setEnabled(false);
+			botonInventario.setEnabled(false);
+			botonVentas.setEnabled(false);
+			labelAdmin.setVisible(false);
+			
+		}else {
+			labelEntrenador.setVisible(false);
+		 
+		}
+		
+	}
 	public Sistema() {
+	
 		getContentPane().setBackground(new Color(45, 62, 80));
 		
 	
@@ -330,15 +350,8 @@ public 	void LimpiarTable() {
 		
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\pc\\eclipse-workspace\\AppGym\\src\\img\\img5.png"));
-		lblNewLabel_2.setBounds(69, 11, 102, 109);
+		lblNewLabel_2.setBounds(63, 11, 102, 109);
 		panel.add(lblNewLabel_2);
-		
-		JLabel lblNewLabel_1 = new JLabel("Bienvenido");
-		lblNewLabel_1.setBounds(453, 25, 196, 45);
-		lblNewLabel_1.setBackground(new Color(51, 51, 51));
-		lblNewLabel_1.setFont(new Font("Algerian", Font.PLAIN, 30));
-		lblNewLabel_1.setForeground(new Color(153, 153, 153));
-		getContentPane().add(lblNewLabel_1);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(251, 66, 523, 358);
@@ -1479,19 +1492,19 @@ public 	void LimpiarTable() {
 		btnNewButton_5.setBounds(304, 87, 36, 31);
 		btnNewButton_5.setIcon(new ImageIcon("C:\\Users\\pc\\eclipse-workspace\\AppGym\\src\\img\\eliminar (2).png"));
 		panel6.add(btnNewButton_5);
-		JButton botonConfig = new JButton("Tienda");
-		botonConfig.addActionListener(new ActionListener() {
+		 botonTienda = new JButton("Tienda");
+		botonTienda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ListarVenta();
 				tabbedPane.setSelectedIndex(5);
 			}
 		});
-		botonConfig.setForeground(new Color(255, 255, 255));
-		botonConfig.setBackground(new Color(255, 128, 64));
-		botonConfig.setFont(new Font("Segoe UI", Font.BOLD, 16));
-		botonConfig.setIcon(new ImageIcon("C:\\Users\\pc\\eclipse-workspace\\AppGym\\src\\img\\shop.png"));
-		botonConfig.setBounds(10, 335, 211, 23);
-		panel.add(botonConfig);
+		botonTienda.setForeground(new Color(255, 255, 255));
+		botonTienda.setBackground(new Color(255, 128, 64));
+		botonTienda.setFont(new Font("Segoe UI", Font.BOLD, 16));
+		botonTienda.setIcon(new ImageIcon("C:\\Users\\pc\\eclipse-workspace\\AppGym\\src\\img\\shop.png"));
+		botonTienda.setBounds(10, 335, 211, 23);
+		panel.add(botonTienda);
 		
 		JPanel panel7 = new JPanel();
 		panel7.setBackground(new Color(192, 192, 192));
@@ -1766,7 +1779,7 @@ public 	void LimpiarTable() {
 		botonRutina.setBounds(10, 267, 211, 23);
 		panel.add(botonRutina);
 		
-		JButton botonInventario = new JButton("Inventario");
+		botonInventario = new JButton("Inventario");
 		botonInventario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				inputCodigoInventario.setText("");
@@ -1785,28 +1798,36 @@ public 	void LimpiarTable() {
 		botonInventario.setBounds(10, 369, 211, 23);
 		panel.add(botonInventario);
 		
-		
-		labelAdmin= new JButton("Admin");
-		labelAdmin.setIcon(new ImageIcon("C:\\Users\\pc\\eclipse-workspace\\AppGym\\src\\img\\corona.png"));
-		labelAdmin.setForeground(new Color(33, 33, 33));
-		labelAdmin.setFont(new Font("Verdana", Font.BOLD, 17));
-		labelAdmin.setBackground(new Color(255, 215, 0));
-		labelAdmin.setBounds(10, 131, 211, 23);
-		panel.add(labelAdmin);
-		
-		JButton btnVentas = new JButton("Ventas");
-		btnVentas.addActionListener(new ActionListener() {
+		 botonVentas = new JButton("Ventas");
+		botonVentas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tabbedPane.setSelectedIndex(7);
 				
 			}
 		});
-		btnVentas.setIcon(new ImageIcon("C:\\Users\\pc\\eclipse-workspace\\AppGym\\src\\img\\ventas.png"));
-		btnVentas.setForeground(Color.WHITE);
-		btnVentas.setFont(new Font("Segoe UI", Font.BOLD, 16));
-		btnVentas.setBackground(new Color(255, 128, 64));
-		btnVentas.setBounds(10, 403, 211, 23);
-		panel.add(btnVentas);
+		botonVentas.setIcon(new ImageIcon("C:\\Users\\pc\\eclipse-workspace\\AppGym\\src\\img\\ventas.png"));
+		botonVentas.setForeground(Color.WHITE);
+		botonVentas.setFont(new Font("Segoe UI", Font.BOLD, 16));
+		botonVentas.setBackground(new Color(255, 128, 64));
+		botonVentas.setBounds(10, 403, 211, 23);
+		panel.add(botonVentas);
+		
+		
+		labelAdmin= new JButton("Admin");
+		labelAdmin.setBounds(10, 131, 211, 23);
+		panel.add(labelAdmin);
+		labelAdmin.setIcon(new ImageIcon("C:\\Users\\pc\\eclipse-workspace\\AppGym\\src\\img\\corona.png"));
+		labelAdmin.setForeground(new Color(33, 33, 33));
+		labelAdmin.setFont(new Font("Verdana", Font.BOLD, 17));
+		labelAdmin.setBackground(new Color(255, 215, 0));
+		
+		 labelEntrenador = new JButton("");
+		labelEntrenador.setBounds(660, 11, 103, 66);
+		getContentPane().add(labelEntrenador);
+		labelEntrenador.setIcon(new ImageIcon("C:\\Users\\pc\\eclipse-workspace\\AppGym\\src\\img\\entrenadorPerfil.png"));
+		labelEntrenador.setForeground(new Color(33, 33, 33));
+		labelEntrenador.setFont(new Font("Verdana", Font.BOLD, 17));
+		labelEntrenador.setBackground(new Color(255, 215, 0));
 		
 	}
 	
@@ -1889,6 +1910,11 @@ public 	void LimpiarTable() {
 			
 			modelo.setRowCount(0);
 		}
+
+private JButton botonVentas;
+private JButton botonInventario;
+private JButton botonTienda;
 	
 	private JButton labelAdmin;
+	private JButton labelEntrenador;
 }

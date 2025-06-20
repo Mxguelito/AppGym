@@ -58,7 +58,7 @@ public class LoginDAO{
 	
 	
 	public boolean Registrar(Login2 registrar) {
-		String sql="INSERT INTO usuarios (nombre,email,pass,tipo) VALUES (?,?,?,?)";
+		String sql="INSERT INTO usuario (nombre,email,pass,tipo) VALUES (?,?,?,?)";
 		try {
 			con=cn.getConnection();
 			ps=con.prepareStatement(sql);

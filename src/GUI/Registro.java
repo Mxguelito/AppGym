@@ -11,16 +11,22 @@ import DLL.Login2;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.UIManager;
+import javax.swing.JComboBox;
 
 public class Registro extends JFrame {
 
@@ -28,11 +34,13 @@ public class Registro extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtEmail;
 	private JPasswordField txtPass;
-
+	private JTextField inputNombreRegistro;
+    private JComboBox comboBoxRegistro;
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+	
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -49,7 +57,15 @@ public class Registro extends JFrame {
 	 * Create the frame.
 	 */
 	public Registro() {
-		setBackground(Color.RED);
+		
+		UIManager.put("ComboBox.selectionBackground", new Color(52, 152, 219)); // FONDO CUANDO SELECCIONAS
+		UIManager.put("ComboBox.selectionForeground", new Color(236, 240, 241)); // TEXTO BLANCO
+		UIManager.put("ComboBox.background", new Color(44, 62, 80)); // FONDO BASE
+		UIManager.put("ComboBox.foreground", new Color(236, 240, 241)); // TEXTO BASE 
+		UIManager.put("ComboBox.border", BorderFactory.createLineBorder(new Color(41, 128, 185), 2));
+		
+		
+		setBackground(new Color(10,20,40));
 		
 		
 		setSize(800,600);
@@ -84,62 +100,97 @@ public class Registro extends JFrame {
 		lblNewLabel_2.setBackground(new Color(255, 255, 255));
 		lblNewLabel_2.setForeground(new Color(255, 255, 255));
 		lblNewLabel_2.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblNewLabel_2.setBounds(20, 78, 103, 26);
+		lblNewLabel_2.setBounds(20, 54, 103, 26);
 		panel_1.add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_3 = new JLabel("Password");
 		lblNewLabel_3.setBackground(new Color(255, 255, 255));
 		lblNewLabel_3.setForeground(new Color(255, 255, 255));
 		lblNewLabel_3.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblNewLabel_3.setBounds(20, 166, 103, 26);
+		lblNewLabel_3.setBounds(20, 98, 103, 26);
 		panel_1.add(lblNewLabel_3);
 		
 		txtEmail = new JTextField();
 		txtEmail.setBackground(new Color(240, 240, 240));
 		txtEmail.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtEmail.setBounds(20, 104, 184, 20);
+		txtEmail.setBounds(20, 79, 184, 20);
 		panel_1.add(txtEmail);
 		txtEmail.setColumns(10);
 		
 		txtPass = new JPasswordField();
 		txtPass.setBackground(new Color(240, 240, 240));
 		txtPass.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtPass.setBounds(20, 192, 184, 20);
+		txtPass.setBounds(20, 121, 184, 20);
 		panel_1.add(txtPass);                    
 		
-		JButton botonLogin = new JButton("Login");
+		JButton botonLogin = new JButton("Continuar");
 		botonLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				validar();
 			}
 		});
 		botonLogin.setForeground(new Color(255, 255, 255));
-		botonLogin.setBackground(new Color(255, 115, 0));
+		botonLogin.setBackground(new Color(23, 150, 243));
 		
 		botonLogin.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
-		botonLogin.setBounds(61, 223, 109, 32);
+		botonLogin.setBounds(61, 249, 109, 32);
 		botonLogin.setFocusPainted(false);
 		botonLogin.setBorderPainted(false);
 		
 		panel_1.add(botonLogin);
 		
-		JPanel panel_2 = new JPanel();
-		panel_2.setForeground(new Color(255, 255, 255));
-		panel_2.setBackground(new Color(233, 30, 99));
-		panel_2.setBounds(61, 280, 109, 38);
-		panel_1.add(panel_2);
-		panel_2.setLayout(null);
+		JPanel follow = new JPanel();
+		follow.setForeground(Color.WHITE);
+		follow.setBackground(new Color(244, 143, 177));
+		follow.setBounds(61, 292, 109, 38);
+		panel_1.add(follow);
+		follow.setLayout(null);
 		
 		JLabel lblNewLabel_4 = new JLabel("New label");
 		lblNewLabel_4.setIcon(new ImageIcon("C:\\Users\\pc\\eclipse-workspace\\AppGym\\src\\img\\img4.png"));
 		lblNewLabel_4.setBounds(59, -1, 34, 39);
-		panel_2.add(lblNewLabel_4);
+		follow.add(lblNewLabel_4);
 		
 		JLabel lblNewLabel_5 = new JLabel("Follow ");
 		lblNewLabel_5.setForeground(new Color(255, 255, 255));
 		lblNewLabel_5.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		lblNewLabel_5.setBounds(20, 10, 39, 17);
-		panel_2.add(lblNewLabel_5);
+		follow.add(lblNewLabel_5);
+		
+		JLabel lblNewLabel_3_1 = new JLabel("Nombre");
+		lblNewLabel_3_1.setForeground(Color.WHITE);
+		lblNewLabel_3_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblNewLabel_3_1.setBackground(Color.WHITE);
+		lblNewLabel_3_1.setBounds(20, 139, 103, 26);
+		panel_1.add(lblNewLabel_3_1);
+		
+		inputNombreRegistro = new JTextField();
+		inputNombreRegistro.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		inputNombreRegistro.setColumns(10);
+		inputNombreRegistro.setBackground(UIManager.getColor("Button.background"));
+		inputNombreRegistro.setBounds(20, 163, 184, 20);
+		panel_1.add(inputNombreRegistro);
+		
+		JLabel lblNewLabel_2_1 = new JLabel("Identidad de acceso");
+		lblNewLabel_2_1.setForeground(Color.WHITE);
+		lblNewLabel_2_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblNewLabel_2_1.setBackground(Color.WHITE);
+		lblNewLabel_2_1.setBounds(20, 183, 150, 26);
+		panel_1.add(lblNewLabel_2_1);
+		
+		
+		 comboBoxRegistro = new JComboBox();
+		
+		 
+		 comboBoxRegistro.addItem("Admin");
+		 comboBoxRegistro.addItem("Entrenador");
+		 comboBoxRegistro.addItem("Cliente");
+		 comboBoxRegistro.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		 
+		comboBoxRegistro.setBounds(20, 208, 150, 22);
+		panel_1.add(comboBoxRegistro);
+		
+		
 		
 		JLabel lblNewLabel_6 = new JLabel("");
 		lblNewLabel_6.setIcon(new ImageIcon("C:\\Users\\pc\\eclipse-workspace\\AppGym\\src\\img\\img5.png"));
@@ -155,31 +206,39 @@ public class Registro extends JFrame {
 	public void validar() { 
 		String email= txtEmail.getText();
 		String pass= String.valueOf(txtPass.getPassword());
-		
-		//------------SI NO ESTA VACIO--------------------
-		if (!"".equals(email) || !"".equals(pass)) {
-			//----------------------------------------
-			//-----INFORMACION------
-			Login2 lg =new Login2();
+		String nombre =inputNombreRegistro.getText();
+		String tipo=comboBoxRegistro.getSelectedItem().toString();
+		try {
+			if (!"".equals(email) || !"".equals(pass)|| !"".equals(nombre)) {
+				//----------------------------------------
+				//-----INFORMACION------
+				Login2 lg =new Login2();
+				LoginDAO loginDAO =new LoginDAO();
+		        //----------------------------------	
+				lg.setNombre(nombre);
+				lg.setEmail(email);
+				lg.setPass(pass);
+				lg.setTipo(tipo);
+				 
+				loginDAO.Registrar(lg);
+	//---------------REGISTRADO---------------------------------			
 			
-			
-			LoginDAO login =new LoginDAO();
-			
-			lg=login.log(email,pass);
-			
-			if (lg.getEmail()!=null&&lg.getPass()!=null) {
 				
-			Sistema sis =new Sistema();
-			
-			sis.setVisible(true);
-			
-			dispose();
-			
-			}else {
-				JOptionPane.showMessageDialog(null,"Email o Contraseña Incorrecta...");
+				//--ABRO LA VISTA LOGIN-------
+				Login iniciar =new Login();
+				
+				iniciar.setVisible(true);
+				
+				dispose();
+				
+				
+				
+				
 			}
-			
-			
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null,"No Registra Usuario");
 		}
+		//------------SI NO ESTA VACIO--------------------
+	
 	}
 }
