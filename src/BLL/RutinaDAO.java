@@ -24,7 +24,7 @@ public class RutinaDAO {
 	public boolean RegistrarRutina(Rutina ru) {
 
 		
-		String sql="INSERT INTO rutina (codigo,ejercicio,series,veces_semana,entrenador) VALUES (?,?,?,?,?) ";
+		String sql="INSERT INTO rutina (codigo,ejercicio,series,veces_semana,entrenador,idObjetivo) VALUES (?,?,?,?,?,?) ";
 		try {
 			con=cn.getConnection();
 			ps=con.prepareStatement(sql);
@@ -33,6 +33,7 @@ public class RutinaDAO {
 			ps.setString(3,ru.getSeries());
 			ps.setInt(4,ru.getVeces_semana());
 			ps.setString(5,ru.getEntrenador());
+			ps.setInt(6,ru.getIdObjetivo());
 			
 			ps.execute();
 			

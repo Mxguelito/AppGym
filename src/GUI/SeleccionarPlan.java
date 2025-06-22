@@ -10,10 +10,15 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
+import DLL.Cliente2;
+import DLL.ClienteDAO2;
+
 public class SeleccionarPlan extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	Cliente2 cl=new Cliente2();
+	ClienteDAO2 cliente= new ClienteDAO2();
 
 	/**
 	 * Launch the application.
@@ -22,7 +27,7 @@ public class SeleccionarPlan extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					SeleccionarPlan frame = new SeleccionarPlan();
+					SeleccionarPlan frame = new SeleccionarPlan(idCliente,idObjetivo);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -34,7 +39,10 @@ public class SeleccionarPlan extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public SeleccionarPlan() {
+	public SeleccionarPlan(int idCliente,int idObjetivo) {
+		this.idCliente=idCliente;
+		this.idObjetivo=idObjetivo;
+		
 		 setTitle("Elegí tu plan");
 	        setSize(600, 400);
 	        setLocationRelativeTo(null);
@@ -65,7 +73,7 @@ public class SeleccionarPlan extends JFrame {
 	            "🔵 Plan VIP\n\n" +
 	            "✅ Rutina + Dieta personalizada\n" +
 	            "✅ Beneficios exclusivos\n" +
-	            "💰 Precio: $8.000/mes"
+	            "💰 Precio: $10.000/mes"
 	        );
 	        planVip.setBounds(330, 70, 200, 180);
 	        planVip.setEditable(false);
@@ -77,17 +85,21 @@ public class SeleccionarPlan extends JFrame {
 
 	        // Acción para elegir plan Básico
 	        btnBasico.addActionListener(e -> {
-	          // asignarPlanBasico(cliente.getId());
+	        	
+	          cliente.asignarPlanBasico(idCliente);
 	          //  new VistaCliente(cliente).setVisible(true);
 	            dispose();
 	        });
 
 	        // Acción para elegir plan VIP
 	        btnVip.addActionListener(e -> {
-	           //TODAVIA FALTA ESTA FUNCION  asignarPlanVIP(cliente.getId());
+	           cliente.asignarPlanVip(idCliente);
 	           // new VistaCliente(cliente).setVisible(true);
 	            dispose();
 	        });
 	}
+	
+	private static int idCliente;
+	private static int idObjetivo;
 
 }

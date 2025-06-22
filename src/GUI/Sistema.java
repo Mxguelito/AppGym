@@ -43,11 +43,15 @@ import BLL.Venta;
 import BLL.VentaDAO;
 import DLL.Cliente2;
 import DLL.ClienteDAO2;
+import DLL.Conexion2;
 import DLL.Login2;
 
 import javax.swing.JScrollPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.JTabbedPane;
@@ -58,7 +62,12 @@ import BLL.Producto;
 import BLL.ProductoDAO;
 
 public class Sistema extends JFrame {
-	
+	//-------CONEXION--------
+		Conexion2 cn = new Conexion2();
+		Connection con;
+		PreparedStatement ps;
+		ResultSet rs;
+		//-----------------------
 	private JTabbedPane tabbedPane;
 //--------CLIENTE-----------------------
 	Cliente2 cl=new Cliente2();
@@ -122,6 +131,7 @@ public class Sistema extends JFrame {
 		
 		
 	}
+	
 	
      
 	public void ListarCliente() {
@@ -317,7 +327,25 @@ public 	void LimpiarTable() {
 	 
 		
 	}
+	public void cargarObjetivos(JComboBox<String> comboBox) {
+		try {
+			con=cn.getConnection();
+			String sql="SELECT descripcion FROM objetivo";
+			ps=con.prepareStatement(sql);
+			rs=ps.executeQuery();
+			while(rs.next()) {
+				comboBox.addItem(rs.getString("descripcion"));
+			}
+			rs.close();
+			ps.close();
+			con.close();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
 	public Sistema() {
+		
 	
 		getContentPane().setBackground(new Color(45, 62, 80));
 		
@@ -902,6 +930,7 @@ public 	void LimpiarTable() {
 							inputEjercicioRutina.setText(""+ru.getEjercicio());
 							comboBoxEntrenador.setSelectedItem(ru.getEntrenador());
 							
+							
 							inputCodigoRutina.requestFocus();//ESTO INICIALIZA POR DEFECTO...
 							//---EN CASO DE VENTA
 							//TXTCANTIDADVENTA.REQUESTfOCUS
@@ -1023,7 +1052,7 @@ public 	void LimpiarTable() {
 		panel4.add(botonEliminarRutina);
 		 
 		 comboBoxEntrenador = new JComboBox<>();
-		comboBoxEntrenador.setBounds(140, 149, 139, 22);
+		comboBoxEntrenador.setBounds(104, 149, 175, 22);
 		panel4.add(comboBoxEntrenador);
 	    
 		
@@ -1074,8 +1103,14 @@ public 	void LimpiarTable() {
 		panel4.add(botonGuardarRutina);
 		
 		JScrollPane scrollPane_2 = new JScrollPane();
-		scrollPane_2.setBounds(0, 187, 508, 132);
+		scrollPane_2.setBounds(0, 221, 508, 98);
 		panel4.add(scrollPane_2);
+		JComboBox comboObjetivo = new JComboBox<String>();
+		comboObjetivo.setBounds(104, 179, 175, 22);
+		
+		panel4.add(comboObjetivo);
+		cargarObjetivos(comboObjetivo);
+		
 		
 		table4 = new JTable();
 		table4.addMouseListener(new MouseAdapter() {
@@ -1088,14 +1123,14 @@ public 	void LimpiarTable() {
 				inputSeriesRutina.setText(table4.getValueAt(fila, 3).toString());
 				inputVecesXsemanaRutina.setText(table4.getValueAt(fila, 4).toString());
 				comboBoxEntrenador.setSelectedItem(table4.getValueAt(fila, 5).toString().trim());
-				
+				comboObjetivo.setSelectedItem(table4.getValueAt(fila, 6).toString().trim());
 			}
 		});
 		table4.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
 			new String[] {
-				"Id", "C\u00F3digo", "Ejercicio", "Series", "VecesXsemana", "Entrenador"
+				"Id", "C\u00F3digo", "Ejercicio", "Series", "VecesXsemana", "Entrenador", "Objetivo"
 			}
 		));
 		table4.getColumnModel().getColumn(4).setPreferredWidth(87);
@@ -1104,7 +1139,7 @@ public 	void LimpiarTable() {
 		JLabel lblNewLabel_3_3_1_1 = new JLabel(" Entrenador");
 		lblNewLabel_3_3_1_1.setForeground(new Color(0, 51, 102));
 		lblNewLabel_3_3_1_1.setFont(new Font("Bodoni MT", Font.BOLD, 20));
-		lblNewLabel_3_3_1_1.setBounds(0, 149, 136, 19);
+		lblNewLabel_3_3_1_1.setBounds(0, 149, 119, 19);
 		panel4.add(lblNewLabel_3_3_1_1);
 		
 		JLabel lblNewLabel_4 = new JLabel("");
@@ -1113,6 +1148,16 @@ public 	void LimpiarTable() {
 		lblNewLabel_4.setIcon(new ImageIcon("C:\\Users\\pc\\eclipse-workspace\\AppGym\\src\\img\\busc.png"));
 		lblNewLabel_4.setBounds(248, 22, 31, 37);
 		panel4.add(lblNewLabel_4);
+		
+		JLabel lblNewLabel_3_3_1_1_1 = new JLabel("Objetivo");
+		lblNewLabel_3_3_1_1_1.setForeground(new Color(0, 51, 102));
+		lblNewLabel_3_3_1_1_1.setFont(new Font("Bodoni MT", Font.BOLD, 20));
+		lblNewLabel_3_3_1_1_1.setBounds(10, 179, 83, 19);
+		panel4.add(lblNewLabel_3_3_1_1_1);
+		
+		
+		
+		
 		
 		
 		
@@ -1913,6 +1958,7 @@ public 	void LimpiarTable() {
 			
 			modelo.setRowCount(0);
 		}
+
 
 private JButton botonVentas;
 private JButton botonInventario;

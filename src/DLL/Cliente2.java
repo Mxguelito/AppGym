@@ -8,10 +8,11 @@ private int altura;
 private int peso;
 private int edad;
 private String nivel;
+private int idObjetivo;
 public Cliente2() {
 	super();
 }
-public Cliente2(int id_cliente, String nombre, int altura, int peso, int edad, String nivel) {
+public Cliente2(int id_cliente, String nombre, int altura, int peso, int edad, String nivel,int idObjetivo) {
 	super();
 	this.id_cliente = id_cliente;
 	this.nombre = nombre;
@@ -19,6 +20,13 @@ public Cliente2(int id_cliente, String nombre, int altura, int peso, int edad, S
 	this.peso = peso;
 	this.edad = edad;
 	this.nivel = nivel;
+	this.idObjetivo=idObjetivo;
+}
+public int getIdObjetivo() {
+	return idObjetivo;
+}
+public void setIdObjetivo(int idObjetivo) {
+	this.idObjetivo = idObjetivo;
 }
 public int getId_cliente() {
 	return id_cliente;

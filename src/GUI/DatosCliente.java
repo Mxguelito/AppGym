@@ -270,18 +270,22 @@ public class DatosCliente extends JFrame {
 				int edad =Integer.parseInt(inputEdad.getText());
 				String nivel=comboNivel.getSelectedItem().toString();
 				String objetivo=comboObjetivo.getSelectedItem().toString();
+				
 				ClienteDAO2 dao = new ClienteDAO2();
 				Cliente2 cliente =new Cliente2();
+				int idObjetivo=dao.obtenerIdObjetivo(objetivo);
 				cliente.setNombre(nombre);
 				cliente.setAltura(altura);
 				cliente.setPeso(peso);
 				cliente.setEdad(edad);
 				cliente.setNivel(nivel);
+				cliente.setIdObjetivo(idObjetivo);
 				
 				int idCliente=dao.registrarYdevolverId(cliente);
 				dao.obtenerIdObjetivo(objetivo);
 				
-				SeleccionarPlan plan =new SeleccionarPlan();
+				SeleccionarPlan plan =new SeleccionarPlan(idCliente,idObjetivo);
+				
 				plan.setVisible(true);
 				dispose();
 				} catch (Exception e2) {
@@ -295,9 +299,6 @@ public class DatosCliente extends JFrame {
 		btnGuardarCliente.setBounds(32, 265, 65, 54);
 		txtClientes.add(btnGuardarCliente);
 	}
+
 	
-	 public void asignarPlanBasico(int idCliente,int idObjetivo,int idRutina) {
-		 ClienteDAO2 dao=new ClienteDAO2();
-		 dao.asignarPlanBasico(idCliente, idObjetivo, idRutina);
-	 }
 }

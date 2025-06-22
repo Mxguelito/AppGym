@@ -7,12 +7,13 @@ public class Rutina {
 	private String series;
 	private int veces_semana;
 	private String entrenador;
+	private int idObjetivo;
 	
 	
 	public Rutina() {
 		super();
 	}
-	public Rutina(int id_rutina, String codigo, String ejercicio, String series, int veces_semana,String entrenador) {
+	public Rutina(int id_rutina, String codigo, String ejercicio, String series, int veces_semana,String entrenador,int idObjetivo) {
 		super();
 		this.id_rutina = id_rutina;
 		this.codigo = codigo;
@@ -20,6 +21,12 @@ public class Rutina {
 		this.series = series;
 		this.veces_semana = veces_semana;
 		this.entrenador=entrenador;
+	}
+	public int getIdObjetivo() {
+		return idObjetivo;
+	}
+	public void setIdObjetivo(int idObjetivo) {
+		this.idObjetivo = idObjetivo;
 	}
 	public int getId_rutina() {
 		return id_rutina;
