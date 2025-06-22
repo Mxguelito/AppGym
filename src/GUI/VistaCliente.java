@@ -271,7 +271,6 @@ public 	void LimpiarTable() {
 	
 	public VistaCliente (Login2 privilegios) {
 		this();
-		
 	
 		
 	}

@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -193,43 +194,78 @@ System.out.println(e.toString());
     	
     	
     }
-    public void asignarPlanBasico(int id_cliente) {
-    	String sql ="INSERT INTO basico (precio,objetivo,rutina,idCliente) VALUES (?,?,?,?)";
+    public void asignarPlanBasico(int id_cliente,int idObjetivo,int id_rutina) {
+    	String sql ="INSERT INTO basico (precio,idObjetivo,idRutina,idCliente) VALUES (?,?,?,?)";
     	try {
     		con=cn.getConnection();
-			ps=con.prepareStatement(sql);
-			ps.setInt(1,5000);
-			ps.setString(2,"Tonificacion General");
-		} catch (Exception e) {
-System.out.println(e.toString());		
+    		ps=con.prepareStatement(sql);
+    		ps.setInt(1,5000);
+    		ps.setInt(2,idObjetivo);
+    		ps.setInt(3,id_rutina);
+    		ps.setInt(4,id_cliente);
+			
+			ps.executeUpdate();
+		} catch (SQLException e) {
+System.out.println(e.toString());	
+JOptionPane.showMessageDialog(null, "error al asignar plan basico...");
 }
     	
     	
     }
-    public void asignarPlanVip(int id_cliente) {
+    
+    public int obtenerIdObjetivo(String descripcion) {
+    	int idObjetivo=-1;
+    	try {
+    		con=cn.getConnection();
+    		String sql;
+    		
+    			sql="SELECT idObjetivo FROM objetivo WHERE descripcion = ?";
+    			ps=con.prepareStatement(sql);
+    			ps.setString(1, descripcion);
+    		
+    		rs=ps.executeQuery();
+    		
+    		if (rs.next()) {
+    			idObjetivo=rs.getInt("idObjetivo");
+				
+			}rs.close();
+			ps.close();
+			con.close();
+			
+		} catch (SQLException e) {
+System.out.println(e.toString());
+JOptionPane.showMessageDialog(null, "Error al obtener objetivo");}
+    	return idObjetivo;
+    }
+    
+    public void asignarPlanVip(int id_cliente,int idObjetivo,int id_rutina,int id_dieta) {
     	
 try {
 	con=cn.getConnection();
-	//PRIMERO CREAMOS LA DIETA----
-	int idDieta=crearDieta(
-			"Avena  con banana",
-			"Pollo con Arroz",
-			"Fruta mas Yogurt",
-			"Ensalada y carne Magra",id_cliente);
 	
 	//AHORA INSERTAMOS EL PLAN VIP-----
-	String sql="INSERT INTO vip (precio,objetivo,id_rutina,id_dieta,idCliente) VALUES (?,?,?,?,?)";
+	String sql="INSERT INTO vip (precio,idObjetivo,id_rutina,id_dieta,idCliente) VALUES (?,?,?,?,?)";
 	ps=con.prepareStatement(sql);
 	ps.setInt(1, 10000);
-	ps.
+	ps.setInt(2, idObjetivo);
+	ps.setInt(3, id_rutina);
+	ps.setInt(4, id_dieta);
+	ps.setInt(5, id_cliente);
+	ps.executeUpdate();
 	
-			
-	
-	
-} catch (Exception e) {
+} catch (SQLException e) {
 System.out.println(e.toString());
+JOptionPane.showMessageDialog(null, "error al asignar plan vip...");
 }    
 }
+    public void guardarObjetivoCliente(String objetivo) {
+    	try {
+    		con=cn.getConnection();
+    		String sql="INSERT INTO objetivo(descripcion) VALUES  (? ";
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+    }
     public int crearDieta(String desayuno,String almuerzo,String merienda,String cena,int id_cliente) {
     	int idDieta=-1;
     	String sql="INSERT INTO dieta (desayuno,almuerzo,merienda,cena,idCliente) VALUES (?,?,?,?,?)";
@@ -252,10 +288,54 @@ System.out.println(e.toString());
 			con.close();
 			
 			
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Error al crear Dieta...");
 System.out.println(e.toString());
 }
     	return idDieta;
+    }
+    public int obtenerRutinaPorObjetivo(int idObjetivo) {
+    	int id_rutina=-1;
+    	try {
+    		con=cn.getConnection();
+    		String sql="SELECT id_rutina FROM rutina WHERE codigo = ? LIMIT 1";
+    		ps=con.prepareStatement(sql);
+    		
+    		ps.setInt(1, idObjetivo);
+    		rs=ps.executeQuery();
+    		if (rs.next()) {
+    			id_rutina =rs.getInt("id_rutina");
+				
+			}
+    		
+		} catch (SQLException e) {
+System.out.println(e.toString());	
+JOptionPane.showMessageDialog(null, "Error al obtener rutina...");
+}
+    	return id_rutina;
+    }
+    public int registrarYdevolverId(Cliente2 cliente) {
+    	int idCliente=-1;
+    	try {
+    		con=cn.getConnection();
+    		String sql="INSERT INTO cliente (nombre,altura,peso ,edad ,nivel) VALUES (?,?,?,?,?)";
+    		ps=con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+    		ps.setString(1, cliente.getNombre());
+    		ps.setInt(2, cliente.getAltura());
+    		ps.setInt(3, cliente.getPeso());
+    		ps.setInt(4, cliente.getEdad());
+    		ps.setString(5, cliente.getNivel());
+    		ps.executeUpdate();
+    		rs=ps.getGeneratedKeys();
+    		if (rs.next()) {
+    			idCliente=rs.getInt(1);
+				
+			}
+			
+		} catch (SQLException e) {
+System.out.println(e.toString());	
+JOptionPane.showMessageDialog(null, "ERROR al registrar y devolver id...");
+}
+    	return idCliente;
     }
 }

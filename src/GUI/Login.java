@@ -183,13 +183,25 @@ public class Login extends JFrame {
 			
 			lg=login.log(email,pass);
 			
+			Login2 usuario=login.log(email, pass);
+			
 			if (lg.getEmail()!=null&&lg.getPass()!=null) {
+				if (usuario.getTipo().equals("Cliente")) {
+					//VistaCliente cliente=new VistaCliente(usuario);
+					DatosCliente plan =new DatosCliente();
+					//cliente.setVisible(true);
+					plan.setVisible(true);
+				} else if(usuario.getTipo().equals("Admin")){
+					Sistema sis=new Sistema(usuario);
+					sis.setVisible(true);
+					
+				}else if (usuario.getTipo().equals("Entrenador")) {
+					Sistema sis=new Sistema(usuario);
+					sis.setVisible(true);
+					
+				}dispose();
 				
-			Sistema sis =new Sistema(lg);
 			
-			sis.setVisible(true);
-			
-			dispose();
 			
 			}else {
 				JOptionPane.showMessageDialog(null,"Email o Contraseña Incorrecta...");

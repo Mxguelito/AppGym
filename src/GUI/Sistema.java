@@ -301,17 +301,20 @@ public 	void LimpiarTable() {
 	
 	public Sistema (Login2 privilegios) {
 		this();
-		
 		if (privilegios.getTipo().equals("Entrenador")) {
+			labelAdmin.setEnabled(false);
 			botonTienda.setEnabled(false);
 			botonInventario.setEnabled(false);
 			botonVentas.setEnabled(false);
-			labelAdmin.setVisible(false);
 			
 		}else {
-			labelEntrenador.setVisible(false);
-		 
+			labelAdmin.setEnabled(true);
+			botonTienda.setEnabled(true);
+			botonInventario.setEnabled(true);
+			botonVentas.setEnabled(true);
+			labelEntrenador.setEnabled(false);
 		}
+	 
 		
 	}
 	public Sistema() {
@@ -356,30 +359,6 @@ public 	void LimpiarTable() {
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(251, 66, 523, 358);
 		getContentPane().add(tabbedPane);
-
-		JButton btnNewButton = new JButton("Clientes");
-		btnNewButton.setForeground(new Color(255, 255, 255));
-		btnNewButton.setBackground(new Color(255, 128, 64));
-		btnNewButton.setFont(new Font("Segoe UI", Font.BOLD, 16));
-		btnNewButton.setIcon(new ImageIcon("C:\\Users\\pc\\eclipse-workspace\\AppGym\\src\\img\\cliente.png"));
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			ListarCliente();
-			
-			tabbedPane.setSelectedIndex(0);
-			textNombre.setText("");
-			textAltura.setText("");
-			textPeso.setText("");
-			textEdad.setText("");
-			textNivel.setText("");
-			table.clearSelection();
-			
-		
-			
-			}
-		});
-		btnNewButton.setBounds(10, 165, 211, 23);
-		panel.add(btnNewButton);
 		
 		
 		
@@ -629,7 +608,7 @@ public 	void LimpiarTable() {
 		});
 		botonEntrenador.setFont(new Font("Segoe UI", Font.BOLD, 16));
 		botonEntrenador.setIcon(new ImageIcon("C:\\Users\\pc\\eclipse-workspace\\AppGym\\src\\img\\entrenador.png"));
-		botonEntrenador.setBounds(10, 199, 211, 23);
+		botonEntrenador.setBounds(10, 165, 211, 23);
 		panel.add(botonEntrenador);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -1820,6 +1799,30 @@ public 	void LimpiarTable() {
 		labelAdmin.setForeground(new Color(33, 33, 33));
 		labelAdmin.setFont(new Font("Verdana", Font.BOLD, 17));
 		labelAdmin.setBackground(new Color(255, 215, 0));
+		
+				JButton btnNewButton = new JButton("Clientes");
+				btnNewButton.setBounds(10, 199, 211, 23);
+				panel.add(btnNewButton);
+				btnNewButton.setForeground(new Color(255, 255, 255));
+				btnNewButton.setBackground(new Color(255, 128, 64));
+				btnNewButton.setFont(new Font("Segoe UI", Font.BOLD, 16));
+				btnNewButton.setIcon(new ImageIcon("C:\\Users\\pc\\eclipse-workspace\\AppGym\\src\\img\\cliente.png"));
+				btnNewButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+					ListarCliente();
+					
+					tabbedPane.setSelectedIndex(0);
+					textNombre.setText("");
+					textAltura.setText("");
+					textPeso.setText("");
+					textEdad.setText("");
+					textNivel.setText("");
+					table.clearSelection();
+					
+				
+					
+					}
+				});
 		
 		 labelEntrenador = new JButton("");
 		labelEntrenador.setBounds(660, 11, 103, 66);
