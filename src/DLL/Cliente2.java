@@ -9,10 +9,11 @@ private int peso;
 private int edad;
 private String nivel;
 private int idObjetivo;
+private int id_usuario;
 public Cliente2() {
 	super();
 }
-public Cliente2(int id_cliente, String nombre, int altura, int peso, int edad, String nivel,int idObjetivo) {
+public Cliente2(int id_cliente, String nombre, int altura, int peso, int edad, String nivel,int idObjetivo,int id_usuario) {
 	super();
 	this.id_cliente = id_cliente;
 	this.nombre = nombre;
@@ -21,6 +22,13 @@ public Cliente2(int id_cliente, String nombre, int altura, int peso, int edad, S
 	this.edad = edad;
 	this.nivel = nivel;
 	this.idObjetivo=idObjetivo;
+	this.id_usuario=id_usuario;
+}
+public int getId_usuario() {
+	return id_usuario;
+}
+public void setId_usuario(int id_usuario) {
+	this.id_usuario = id_usuario;
 }
 public int getIdObjetivo() {
 	return idObjetivo;

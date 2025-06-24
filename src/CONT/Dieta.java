@@ -2,48 +2,53 @@ package CONT;
 
 
 public class Dieta {
-	private String nombre;
-	private int duracion;
-	
-	public Dieta(String nombre, int duracion ) {
+	private String desayuno;
+	private String almuerzo;
+	private String merienda;
+	private String cena;
+	private int idObjetivo;
+	public Dieta() {
 		super();
-		this.nombre = nombre;
-		this.duracion = duracion;
-		
 	}
-	public String getNombre() {
-		return nombre;
+	public Dieta(String desayuno, String almuerzo, String merienda, String cena, int idObjetivo) {
+		super();
+		this.desayuno = desayuno;
+		this.almuerzo = almuerzo;
+		this.merienda = merienda;
+		this.cena = cena;
+		this.idObjetivo = idObjetivo;
 	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public String getDesayuno() {
+		return desayuno;
 	}
-	public int getDuracion() {
-		return duracion;
+	public void setDesayuno(String desayuno) {
+		this.desayuno = desayuno;
 	}
-	public void setDuracion(int duracion) {
-		this.duracion = duracion;
+	public String getAlmuerzo() {
+		return almuerzo;
+	}
+	public void setAlmuerzo(String almuerzo) {
+		this.almuerzo = almuerzo;
+	}
+	public String getMerienda() {
+		return merienda;
+	}
+	public void setMerienda(String merienda) {
+		this.merienda = merienda;
+	}
+	public String getCena() {
+		return cena;
+	}
+	public void setCena(String cena) {
+		this.cena = cena;
+	}
+	public int getIdObjetivo() {
+		return idObjetivo;
+	}
+	public void setIdObjetivo(int idObjetivo) {
+		this.idObjetivo = idObjetivo;
 	}
 	
-	
-	
-	public static void menu() {
-		
-	}
-	public void mostrarMenuDia(int dia) {
-		
-	}
-public void agregarComida(String comida ) {
-		
-	}
-public void eliminarComida(String comida ) {
-	
-}
-
-	
-	@Override
-	public String toString() {
-		return "Dieta [nombre=" + nombre + ", duracion=" + duracion + ", comidasPorDia="  + "]";
-	}
 	
 
 }

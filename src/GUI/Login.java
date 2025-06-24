@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import BLL.SesionUsuario;
 import DLL.Login2;
 
 import java.awt.BorderLayout;
@@ -168,6 +169,8 @@ public class Login extends JFrame {
 		panel.add(panel_3);
 		
 	}
+	
+	
 	public void validar() { 
 		String email= txtEmail.getText();
 		String pass= String.valueOf(txtPass.getPassword());
@@ -184,6 +187,7 @@ public class Login extends JFrame {
 			lg=login.log(email,pass);
 			
 			Login2 usuario=login.log(email, pass);
+			SesionUsuario.id_usuario=usuario.getId();
 			
 			if (lg.getEmail()!=null&&lg.getPass()!=null) {
 				if (usuario.getTipo().equals("Cliente")) {

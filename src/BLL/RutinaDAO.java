@@ -72,9 +72,12 @@ JOptionPane.showMessageDialog(null,"No lee el nombre del entrenador en la base d
 	}
 	public List ListarRutina() {
 		//CREO LISTA PARA ALMACENAR DATOS
-		List<Rutina> listaRutina=new ArrayList();
+		List<Rutina> listaRutina=new ArrayList<>();
 		
-		 String sql="SELECT * FROM rutina";
+		
+		
+		 String sql="SELECT r.id_rutina, r.codigo, r.ejercicio, r.series, r.veces_semana, r.entrenador, r.idObjetivo, o.descripcion AS objetivo " + 
+		 "FROM rutina r JOIN objetivo o ON r.idObjetivo = o.idObjetivo ";
 		 try {
 			 //CONEXION---
 			 con=cn.getConnection();
@@ -91,8 +94,14 @@ JOptionPane.showMessageDialog(null,"No lee el nombre del entrenador en la base d
 				 ru.setSeries(rs.getString("series"));
 				 ru.setVeces_semana(rs.getInt("veces_semana"));
 				 ru.setEntrenador(rs.getString("entrenador"));
+				 ru.setIdObjetivo(rs.getInt("idObjetivo"));
+				 String objetivoDescripcion=rs.getString("objetivo");
+				 ru.setObjetivoDescripcion(objetivoDescripcion);
 				 //AÑADO LOS DATOS DE LA BASE DE DATOS A LA LISTA DE ENTRENADORES---
 				 listaRutina.add(ru);
+				 
+				 
+				
 				
 			}
 			 

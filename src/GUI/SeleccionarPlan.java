@@ -12,6 +12,7 @@ import javax.swing.border.EmptyBorder;
 
 import DLL.Cliente2;
 import DLL.ClienteDAO2;
+import javax.swing.ImageIcon;
 
 public class SeleccionarPlan extends JFrame {
 
@@ -50,7 +51,7 @@ public class SeleccionarPlan extends JFrame {
 
 	        JLabel titulo = new JLabel("Elegí tu plan de entrenamiento");
 	        titulo.setBounds(170, 20, 300, 30);
-	        titulo.setFont(new Font("Arial", Font.BOLD, 18));
+	        titulo.setFont(new Font("Georgia", Font.BOLD, 18));
 	        getContentPane().add(titulo);
 
 	        // Panel Básico
@@ -64,8 +65,9 @@ public class SeleccionarPlan extends JFrame {
 	        planBasico.setEditable(false);
 	        getContentPane().add(planBasico);
 
-	        JButton btnBasico = new JButton("Elegir Básico");
-	        btnBasico.setBounds(80, 260, 140, 30);
+	        JButton btnBasico = new JButton(" Básico");
+	        btnBasico.setIcon(new ImageIcon("C:\\Users\\pc\\Downloads\\favoritesilver_star_favorite_6337.png"));
+	        btnBasico.setBounds(103, 254, 117, 57);
 	        getContentPane().add(btnBasico);
 
 	        // Panel VIP
@@ -79,8 +81,9 @@ public class SeleccionarPlan extends JFrame {
 	        planVip.setEditable(false);
 	        getContentPane().add(planVip);
 
-	        JButton btnVip = new JButton("Elegir VIP");
-	        btnVip.setBounds(360, 260, 140, 30);
+	        JButton btnVip = new JButton(" VIP");
+	        btnVip.setIcon(new ImageIcon("C:\\Users\\pc\\Downloads\\favoritesilver_star_favorite_6338.png"));
+	        btnVip.setBounds(383, 254, 117, 57);
 	        getContentPane().add(btnVip);
 
 	        // Acción para elegir plan Básico
@@ -89,6 +92,10 @@ public class SeleccionarPlan extends JFrame {
 	          cliente.asignarPlanBasico(idCliente);
 	          //  new VistaCliente(cliente).setVisible(true);
 	            dispose();
+	            DatosCliente bienvenido =new DatosCliente();
+				bienvenido.setVisible(true);
+				bienvenido.mostrarDatos(idCliente);
+				bienvenido.mostrarBienvenida();
 	        });
 
 	        // Acción para elegir plan VIP
@@ -96,6 +103,10 @@ public class SeleccionarPlan extends JFrame {
 	           cliente.asignarPlanVip(idCliente);
 	           // new VistaCliente(cliente).setVisible(true);
 	            dispose();
+	            DatosCliente bienvenido =new DatosCliente();
+	            bienvenido.setVisible(true);
+	            bienvenido.mostrarDatos(idCliente);
+	            bienvenido.mostrarBienvenida();
 	        });
 	}
 	

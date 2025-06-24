@@ -12,6 +12,9 @@ import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
+import BLL.Basico;
+import BLL.Vip;
+
 public class ClienteDAO2 {
 	
 	//-------CONEXION--------
@@ -22,7 +25,7 @@ public class ClienteDAO2 {
 	//-----------------------
 	
 	public boolean RegistrarCliente(Cliente2 cl) {
-		String sql="INSERT INTO cliente (nombre,altura,peso,edad,nivel)VALUES (?,?,?,?,?)";
+		String sql="INSERT INTO cliente (nombre,altura,peso,edad,nivel,id_usuario)VALUES (?,?,?,?,?,?)";
 		try {
 			con=cn.getConnection();
 			ps=con.prepareStatement(sql);
@@ -32,6 +35,7 @@ public class ClienteDAO2 {
 			ps.setInt(3,cl.getPeso());
 			ps.setInt(4,cl.getEdad());
 			ps.setString(5,cl.getNivel());
+			ps.setInt(6,cl.getId_usuario());
 			
 			ps.execute();
 			
@@ -163,19 +167,19 @@ JOptionPane.showMessageDialog(null, "No lee la baste de datos cliente...");
     }
     public boolean tienePlanAsignado(int id_Cliente) {
     	boolean tienePlan=false;
-    	String sql="SELECT idCliente FROM basico WHERE idCliente = ?";
     	try {
+    		String sqlBasico="SELECT  FROM basico WHERE idCliente = ?";
     		con=cn.getConnection();
-			ps=con.prepareStatement(sql);
+			ps=con.prepareStatement(sqlBasico);
 			ps.setInt(1, id_Cliente);
 			rs=ps.executeQuery();
 			if (rs.next()) {
 				tienePlan=true;
 				
-			}else {
-				sql="SELECT idCliente FROM vip WHERE idCliente = ?";
+			}if(!tienePlan) {
+				String sqlVip="SELECT FROM vip WHERE idCliente = ?";
 				
-				ps=con.prepareStatement(sql);
+				ps=con.prepareStatement(sqlVip);
 				ps.setInt(1, id_Cliente);
 				rs=ps.executeQuery();
 				if (rs.next()) {
@@ -376,7 +380,7 @@ JOptionPane.showMessageDialog(null, "Error al obtener rutina...");
     	int idCliente=-1;
     	try {
     		con=cn.getConnection();
-    		String sql="INSERT INTO cliente (nombre,altura,peso ,edad ,nivel,idObjetivo) VALUES (?,?,?,?,?,?)";
+    		String sql="INSERT INTO cliente (nombre,altura,peso ,edad ,nivel,idObjetivo,id_usuario) VALUES (?,?,?,?,?,?,?)";
     		ps=con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
     		ps.setString(1, cliente.getNombre());
     		ps.setInt(2, cliente.getAltura());
@@ -384,6 +388,7 @@ JOptionPane.showMessageDialog(null, "Error al obtener rutina...");
     		ps.setInt(4, cliente.getEdad());
     		ps.setString(5, cliente.getNivel());
     		ps.setInt(6, cliente.getIdObjetivo());
+    		ps.setInt(7,cliente.getId_usuario());
     		ps.executeUpdate();
     		rs=ps.getGeneratedKeys();
     		if (rs.next()) {
@@ -397,5 +402,128 @@ JOptionPane.showMessageDialog(null, "ERROR al registrar y devolver id...");
 }
     	return idCliente;
     }
+    public Cliente2 obtenerClientePorId(int id_cliente) {
+    	Cliente2 cliente=null;
+    	String sql="SELECT * FROM cliente WHERE id_cliente = ?";
+    	try {
+    		con=cn.getConnection();
+    		ps=con.prepareStatement(sql);
+    		ps.setInt(1, id_cliente);
+    		rs=ps.executeQuery();
+    		if (rs.next()) {
+    			cliente=new Cliente2();
+    			cliente.setId_cliente(rs.getInt("id_cliente"));
+    			cliente.setNombre(rs.getString("nombre"));
+    			cliente.setAltura(rs.getInt("altura"));
+    			cliente.setPeso(rs.getInt("peso"));
+    			cliente.setEdad(rs.getInt("edad"));
+    			cliente.setNivel(rs.getString("nivel"));
+    			cliente.setIdObjetivo(rs.getInt("idObjetivo"));
+				
+			}
+		} catch (Exception e) {
+System.out.println(e.toString());
+JOptionPane.showMessageDialog(null, "Error al obtener cliente por id...");}
+    	 return cliente;
+    	
+    }
+
+    public Vip obtenerPlanVipPorIdCliente(int id_cliente) {
+    	Vip vip =null;
+    	String sql="SELECT FROM vip WHERE id_cliente = ?";
+    	try {
+    		con=cn.getConnection();
+    		ps=con.prepareStatement(sql);
+    		ps.setInt(1, id_cliente);
+    		rs=ps.executeQuery();
+    		if (rs.next()) {
+    			vip=new Vip();
+    			vip.setId_vip(rs.getInt("id_vip"));
+    			vip.setPrecio(rs.getInt("precio"));
+    			vip.setIdObjetivo(rs.getInt("idObjetivo"));
+    			vip.setId_rutina(rs.getInt("id_rutina"));
+    			vip.setId_dieta(rs.getInt("id_dieta"));
+    			vip.setId_cliente(rs.getInt("id_cliente"));
+    			
+				
+			}
+		} catch (Exception e) {
+System.out.println(e.toString());
+JOptionPane.showMessageDialog(null, "Error al obtener Plan vip por id...");}
+    	 return vip;
+    	
+    }
+    public boolean obtenerClientePorUsuario(int id_usuario) {
+    	boolean existe=false;
+    	String sql="SELECT * FROM cliente WHERE id_usuario = ?";
+    	try {
+    		con=cn.getConnection();
+    		ps=con.prepareStatement(sql);
+    		ps.setInt(1, id_usuario);
+    		rs=ps.executeQuery();
+    		if (rs.next()) {
+    			existe=true;
+    			
+				
+			}
+    		
+			
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			JOptionPane.showMessageDialog(null, "Error al obtener Cliente");
+			
+		}
+    	return existe;
+    	
+    	
+    }
+    public Cliente2 obtenerClientePorUsuario2(int id_usuario) {
+    	Cliente2 cliente =null;
+    	String sql="SELECT * FROM cliente WHERE id_usuario = ?";
+    	try {
+    		con=cn.getConnection();
+    		ps=con.prepareStatement(sql);
+    		ps.setInt(1, id_usuario);
+    		rs=ps.executeQuery();
+    		if (rs.next()) {
+    			cliente=new Cliente2();
+    			cliente.setId_cliente(rs.getInt("id_cliente"));
+    			cliente.setNombre(rs.getString("nombre"));
+    			cliente.setAltura(rs.getInt("altura"));
+    			cliente.setPeso(rs.getInt("peso"));
+    			cliente.setEdad(rs.getInt("edad"));
+    			cliente.setNivel(rs.getString("nivel"));
+    			cliente.setIdObjetivo(rs.getInt("idObjetivo"));
+    			cliente.setId_usuario(id_usuario);
+				
+			}
+    		
+			
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			JOptionPane.showMessageDialog(null, "Error al obtener Cliente por usuario...");
+			
+		}
+    	return cliente;
+    	
+    	
+    }
+    public boolean existeUsuario(String usuario) {
+	    String sql = "SELECT * FROM usuario WHERE nombre_usuario = ?";
+	    try {
+	    	con=cn.getConnection();
+	        PreparedStatement ps = con.prepareStatement(sql);
+	        ps.setString(1, usuario);
+	        ResultSet rs = ps.executeQuery();
+	        if (rs.next()) {
+	            return true; // ya existe
+	        }
+	        rs.close(); ps.close(); con.close();
+	    } catch (Exception e) {
+	        System.out.println("Error al verificar usuario: " + e);
+	    }
+	    return false;
+	}
+   
    
 }

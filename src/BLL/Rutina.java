@@ -1,6 +1,21 @@
 package BLL;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.swing.JOptionPane;
+
+import DLL.Conexion2;
+
 public class Rutina {
+	Connection con;
+	Conexion2 cn=new Conexion2();
+	
+	PreparedStatement ps;
+	ResultSet rs;
+	
 	private int id_rutina;
 	private String codigo;
 	private String ejercicio;
@@ -8,6 +23,8 @@ public class Rutina {
 	private int veces_semana;
 	private String entrenador;
 	private int idObjetivo;
+	private String objetivoDescripcion;
+	
 	
 	
 	public Rutina() {
@@ -64,6 +81,32 @@ public class Rutina {
 	public void setEntrenador(String entrenador) {
 		this.entrenador = entrenador;
 	}
+	public String getObjetivoDescripcion() {
+		return objetivoDescripcion;
+	}
+	public void setObjetivoDescripcion(String objetivoDescripcion) {
+		this.objetivoDescripcion = objetivoDescripcion;
+	}
+	   public int obtenerRutinaPorObjetivo(int idObjetivo) {
+	    	int id_rutina=-1;
+	    	try {
+	    		con=cn.getConnection();
+	    		String sql="SELECT id_rutina FROM rutina WHERE codigo = ? LIMIT 1";
+	    		ps=con.prepareStatement(sql);
+	    		
+	    		ps.setInt(1, idObjetivo);
+	    		rs=ps.executeQuery();
+	    		if (rs.next()) {
+	    			id_rutina =rs.getInt("id_rutina");
+					
+				}
+	    		
+			} catch (SQLException e) {
+	System.out.println(e.toString());	
+	JOptionPane.showMessageDialog(null, "Error al obtener rutina...");
+	}
+	    	return id_rutina;
+	    }
 	
 
 }

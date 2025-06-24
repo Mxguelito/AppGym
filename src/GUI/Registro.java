@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import DLL.Conexion2;
 import DLL.Login2;
 
 import java.awt.BorderLayout;
@@ -24,6 +25,9 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.awt.event.ActionEvent;
 import javax.swing.UIManager;
 import javax.swing.JComboBox;
@@ -32,7 +36,7 @@ public class Registro extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtEmail;
+	private JTextField inputEmail;
 	private JPasswordField txtPass;
 	private JTextField inputNombreRegistro;
     private JComboBox comboBoxRegistro;
@@ -56,6 +60,13 @@ public class Registro extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	
+	//-------CONEXION--------
+	Conexion2 cn = new Conexion2();
+	Connection con;
+	PreparedStatement ps;
+	ResultSet rs;
+	//-----------------------
 	public Registro() {
 		
 		UIManager.put("ComboBox.selectionBackground", new Color(52, 152, 219)); // FONDO CUANDO SELECCIONAS
@@ -110,12 +121,12 @@ public class Registro extends JFrame {
 		lblNewLabel_3.setBounds(20, 98, 103, 26);
 		panel_1.add(lblNewLabel_3);
 		
-		txtEmail = new JTextField();
-		txtEmail.setBackground(new Color(240, 240, 240));
-		txtEmail.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtEmail.setBounds(20, 79, 184, 20);
-		panel_1.add(txtEmail);
-		txtEmail.setColumns(10);
+		inputEmail = new JTextField();
+		inputEmail.setBackground(new Color(240, 240, 240));
+		inputEmail.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		inputEmail.setBounds(20, 79, 184, 20);
+		panel_1.add(inputEmail);
+		inputEmail.setColumns(10);
 		
 		txtPass = new JPasswordField();
 		txtPass.setBackground(new Color(240, 240, 240));
@@ -204,7 +215,7 @@ public class Registro extends JFrame {
 		
 	}
 	public void validar() { 
-		String email= txtEmail.getText();
+		String email= inputEmail.getText();
 		String pass= String.valueOf(txtPass.getPassword());
 		String nombre =inputNombreRegistro.getText();
 		String tipo=comboBoxRegistro.getSelectedItem().toString();
@@ -219,6 +230,11 @@ public class Registro extends JFrame {
 				lg.setEmail(email);
 				lg.setPass(pass);
 				lg.setTipo(tipo);
+				String nombreUsuario=inputEmail.getText().trim();
+				if (loginDAO.existeUsuario(nombreUsuario)) {
+					JOptionPane.showMessageDialog(null, "Este usuario ya esta en uso...");
+					
+				}
 				 
 				loginDAO.Registrar(lg);
 	//---------------REGISTRADO---------------------------------			
@@ -240,5 +256,21 @@ public class Registro extends JFrame {
 		}
 		//------------SI NO ESTA VACIO--------------------
 	
+	}
+	public boolean existeUsuario(String usuario) {
+	    String sql = "SELECT * FROM usuario WHERE nombre_usuario = ?";
+	    try {
+	    	con=cn.getConnection();
+	        PreparedStatement ps = con.prepareStatement(sql);
+	        ps.setString(1, usuario);
+	        ResultSet rs = ps.executeQuery();
+	        if (rs.next()) {
+	            return true; // ya existe
+	        }
+	        rs.close(); ps.close(); con.close();
+	    } catch (Exception e) {
+	        System.out.println("Error al verificar usuario: " + e);
+	    }
+	    return false;
 	}
 }

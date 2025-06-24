@@ -9,6 +9,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.event.TableModelEvent;
 
 import java.awt.BorderLayout;
@@ -37,6 +38,7 @@ import javax.swing.table.TableModel;
 import BLL.Entrenador;
 import BLL.EntrenadorDAO;
 import BLL.Eventos;
+import BLL.Objetivo;
 import BLL.Rutina;
 import BLL.RutinaDAO;
 import BLL.Venta;
@@ -197,7 +199,7 @@ public class Sistema extends JFrame {
 		
 		modelo.setRowCount(0);
 		
-		Object[]ob =new Object[6];
+		Object[]ob =new Object[7];
 		for(int i=0;i<listarRutina.size();i++) { 
 			ob[0]=listarRutina.get(i).getId_rutina();
 			ob[1]=listarRutina.get(i).getCodigo();
@@ -205,6 +207,7 @@ public class Sistema extends JFrame {
 			ob[3]=listarRutina.get(i).getSeries();
 			ob[4]=listarRutina.get(i).getVeces_semana();
 			ob[5]=listarRutina.get(i).getEntrenador();
+			ob[6]=listarRutina.get(i).getObjetivoDescripcion();
 	
 			modelo.addRow(ob);		}
 		
@@ -327,14 +330,16 @@ public 	void LimpiarTable() {
 	 
 		
 	}
-	public void cargarObjetivos(JComboBox<String> comboBox) {
+	public void cargarObjetivos(JComboBox<Objetivo> comboBox) {
 		try {
 			con=cn.getConnection();
-			String sql="SELECT descripcion FROM objetivo";
+			String sql="SELECT idObjetivo, descripcion FROM objetivo";
 			ps=con.prepareStatement(sql);
 			rs=ps.executeQuery();
 			while(rs.next()) {
-				comboBox.addItem(rs.getString("descripcion"));
+				int id =rs.getInt("idObjetivo");
+				String descripcion=rs.getString("descripcion");
+				comboBox.addItem(new Objetivo(id,descripcion));
 			}
 			rs.close();
 			ps.close();
@@ -1053,6 +1058,10 @@ public 	void LimpiarTable() {
 		 
 		 comboBoxEntrenador = new JComboBox<>();
 		comboBoxEntrenador.setBounds(104, 149, 175, 22);
+		comboBoxEntrenador.setBackground(new Color(40,45,60));
+		comboBoxEntrenador.setForeground(Color.WHITE);
+		comboBoxEntrenador.setBorder(new LineBorder(Color.GRAY));
+		comboBoxEntrenador.setFont(new Font("Segoe UI",Font.PLAIN,14));
 		panel4.add(comboBoxEntrenador);
 	    
 		
@@ -1061,14 +1070,22 @@ public 	void LimpiarTable() {
 			
 			comboBoxEntrenador.setSelectedIndex(0);
 		}
+		JComboBox comboObjetivo = new JComboBox<Objetivo>();
+		comboObjetivo.setBounds(104, 179, 175, 22);
+		comboObjetivo.setBackground(new Color(40,45,60));
+		comboObjetivo.setForeground(Color.WHITE);
+		comboObjetivo.setBorder(new LineBorder(Color.GRAY));
+		comboObjetivo.setFont(new Font("Segoe UI",Font.PLAIN,14));
 		
+		panel4.add(comboObjetivo);
+		cargarObjetivos(comboObjetivo);
 		
 		JButton botonGuardarRutina = new JButton("");
 		
 		botonGuardarRutina.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				if (!"".equals(inputCodigoRutina.getText()) || !"".equals(inputEjercicioRutina.getText()) || !"".equals(inputSeriesRutina.getText())|| !"".equals(inputVecesXsemanaRutina.getText()) || !"".equals(comboBoxEntrenador.getSelectedItem().toString() )) {
+				if (!"".equals(inputCodigoRutina.getText()) || !"".equals(inputEjercicioRutina.getText()) || !"".equals(inputSeriesRutina.getText())|| !"".equals(inputVecesXsemanaRutina.getText()) || !"".equals(comboBoxEntrenador.getSelectedItem().toString() )||!"".equals(comboObjetivo.getSelectedItem().toString() )) {
 			//------------------
 					
 					ru.setCodigo(inputCodigoRutina.getText());
@@ -1076,6 +1093,8 @@ public 	void LimpiarTable() {
 					ru.setSeries(inputSeriesRutina.getText());
 					ru.setVeces_semana(Integer.parseInt(inputVecesXsemanaRutina.getText()));
 					ru.setEntrenador(comboBoxEntrenador.getSelectedItem().toString());
+					Objetivo obj=(Objetivo) comboObjetivo.getSelectedItem();
+					ru.setIdObjetivo(obj.getId());
 					//REGISTRA ENTRENADOR---
 					ruDAO.RegistrarRutina(ru);
 					ListarRutina();
@@ -1105,11 +1124,8 @@ public 	void LimpiarTable() {
 		JScrollPane scrollPane_2 = new JScrollPane();
 		scrollPane_2.setBounds(0, 221, 508, 98);
 		panel4.add(scrollPane_2);
-		JComboBox comboObjetivo = new JComboBox<String>();
-		comboObjetivo.setBounds(104, 179, 175, 22);
 		
-		panel4.add(comboObjetivo);
-		cargarObjetivos(comboObjetivo);
+	
 		
 		
 		table4 = new JTable();
@@ -1123,7 +1139,18 @@ public 	void LimpiarTable() {
 				inputSeriesRutina.setText(table4.getValueAt(fila, 3).toString());
 				inputVecesXsemanaRutina.setText(table4.getValueAt(fila, 4).toString());
 				comboBoxEntrenador.setSelectedItem(table4.getValueAt(fila, 5).toString().trim());
-				comboObjetivo.setSelectedItem(table4.getValueAt(fila, 6).toString().trim());
+				String objetivoSeleccionado=table4.getValueAt(fila, 6).toString().trim();
+				for (int i =0; i<comboObjetivo.getItemCount(); i++) {
+					Objetivo objetivo=(Objetivo)comboObjetivo.getItemAt(i);
+					if (objetivo.getDescripcion().equalsIgnoreCase(objetivoSeleccionado)) {
+						comboObjetivo.setSelectedIndex(i);
+						break;
+						
+					}
+					
+				}
+				
+				
 			}
 		});
 		table4.setModel(new DefaultTableModel(

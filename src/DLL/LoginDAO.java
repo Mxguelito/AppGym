@@ -47,7 +47,7 @@ public class LoginDAO{
 				l.setPass(rs.getString("pass"));
 				l.setTipo(rs.getNString("tipo"));
 				
-				;
+				
 				
 			}
 		} catch (SQLException e) {
@@ -73,6 +73,22 @@ System.out.println(e.toString());
 return false;
 }
 		
+	}
+	public boolean existeUsuario(String usuario) {
+	    String sql = "SELECT * FROM usuario WHERE email = ?";
+	    try {
+	    	con=cn.getConnection();
+	        PreparedStatement ps = con.prepareStatement(sql);
+	        ps.setString(1, usuario);
+	        ResultSet rs = ps.executeQuery();
+	        if (rs.next()) {
+	            return true; // ya existe
+	        }
+	        rs.close(); ps.close(); con.close();
+	    } catch (Exception e) {
+	        System.out.println("Error al verificar usuario: " + e);
+	    }
+	    return false;
 	}
 }
 
