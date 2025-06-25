@@ -233,10 +233,18 @@ public class Registro extends JFrame {
 				String nombreUsuario=inputEmail.getText().trim();
 				if (loginDAO.existeUsuario(nombreUsuario)) {
 					JOptionPane.showMessageDialog(null, "Este usuario ya esta en uso...");
+					Login iniciar =new Login();
+					
+					iniciar.setVisible(true);
+					
+					dispose();
+					
+					
+					return;
 					
 				}
 				 
-				loginDAO.Registrar(lg);
+				loginDAO.Registrar(lg);//ACA ESTA EL PROBLEMA---!!!!!!
 	//---------------REGISTRADO---------------------------------			
 			
 				
